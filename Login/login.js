@@ -33,7 +33,7 @@ module.exports = function(req,res,next){
               //  res.cookie("auth",true,{httpOnly:true,sameSite:"strict"});
 
                 //snabbt ge en användare acces till en server
-                const token = jwt.sign({email:user[0].email}, secret,{expiresIn:60});
+                const token = jwt.sign({email:user[0].email}, secret,{expiresIn:6000});
                 //cookies skickar data utan clienten märker ochså väldigt säkert då man kan ej ändra det.
                 res.cookie("token",token,{httpOnly:true,sameSite:"strict"});
                 res.redirect("/matratter");

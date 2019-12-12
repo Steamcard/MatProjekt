@@ -20,6 +20,7 @@ module.exports = async function(app){
                 <h3>${matratter.Instruktioner}</h3>
                 <br>
                 <a href="/matratter/radera/${matratter._id}">Ta bort</a>
+                <a href="/matratter/andra/${matratter._id}">Ändra</a>
                 <hr>
                 `;
             });
@@ -70,16 +71,33 @@ module.exports = async function(app){
 
     app.get("/matratter/andra/:id",auth, async function(req,res){
 
-        try{
+        let id = req.params.id;
 
+        const matratter = await app.matratter.findOne({_id:mongoId(id)});
+        let html = `
+        <form action="/matratter/andra/${id}" method="post">
+            <input type="text" name="Mat" value="${matratter.Mat}">
+            <br>
+            <input type="text" name="Bild" value="${matratter.Bild}">
+            <br>
+            <input type="text" name="Instruktioner" value="${matratter.Instruktioner}">
+            <br>
+            <input type="submit" value="Uppdatera">
+
+        </form>
+        `;
+        res.send(render("Edit", html));
+    });
+
+    app.post("/matratter/andra/:id",auth, async function(req,res)
+    {
+        try {
             let id = req.params.id;
-            res.redirect("/matratter/skapa/:id")
-        }
-        catch(error)
-        {
-            res.send("Error");
-        }
-
+            await app.matratter.update({_id:mongoId(id)}, req.body);
+            res.redirect("/matratter"); 
+        } catch (error) {
+            res.send(error.message);
+        }     
     });
 
     //Implementerad LOgin
