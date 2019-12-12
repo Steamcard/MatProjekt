@@ -1,7 +1,13 @@
 const mongo = require('mongodb').MongoClient;
 const express = require("express");
 const conString = "mongodb+srv://Kasper:1231234@cluster0-iczm6.mongodb.net/test?retryWrites=true&w=majority"
-let app;
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const bcrypt = require("bcryptjs");
+const secret = require("./Login/secret");
+const login = require("./Login/login");
+const auth = require("./Login/auth");
+
 
 
 makeConnection()
@@ -14,6 +20,9 @@ async function makeConnection(){
     const col = await db.collection("matratter");
     //Kopplar upp oss
     app = express();
+    app.use(cookieParser());
+    app.use("/Login",express.static(__dirname+"/Login"));
+
     //Parsa req.body
     app.use(express.urlencoded({extended:false}));
     //Öppnar port 2019

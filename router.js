@@ -1,9 +1,10 @@
 const mongoId = require('mongodb').ObjectID;
 const render = require("./renderHtml.js");
-
+const login = require("./Login/login")
+const auth = require("./Login/auth")
 module.exports = async function(app){
 
-    app.get("/matratter", async function(req,res){
+    app.get("/matratter",auth, async function(req,res){
 
         try
         {
@@ -33,7 +34,7 @@ module.exports = async function(app){
     });
     
     //skapar maträtt
-    app.get("/matratter/skapa", function(req,res)
+    app.get("/matratter/skapa",auth, function(req,res)
     {
         res.sendFile(__dirname + "/Matsedel.html")
     });
@@ -53,7 +54,7 @@ module.exports = async function(app){
 
 
 
-    app.get("/matratter/radera/:id", async function(req,res){
+    app.get("/matratter/radera/:id",auth, async function(req,res){
 
         try{
 
@@ -67,14 +68,48 @@ module.exports = async function(app){
     });
 
 
-    app.get("/matratter/andra/:id", async function(req,res){
+    app.get("/matratter/andra/:id",auth, async function(req,res){
 
         try{
 
             let id = req.params.id;
             res.redirect("/matratter/skapa/:id")
         }
+        catch(error)
+        {
+            res.send("Error");
+        }
 
-    })
+    });
+
+    //Implementerad LOgin
+
+    app.get("/",function(req,res){
+        res.send(req.cookies);
+    });
+
+
+    app.post("/login",login,function(req,res)
+    {
+        //all logik i middelware | om du blir inloggad hamnar man i /secret
+        res.sendFile(__dirname + "/Login/loginform.html")
+    });
+
+
+    app.get("/login",function(req,res){
+        res.sendFile(__dirname +"/Login/loginform.html");
+    });
+
+
+    //auth verifierar om man är inloggad eller inte | auth är ett middleware (har tillgång till request, respond och next)
+    app.get("./Login/secret",auth,function(req,res){
+        res.send(req.cookies);
+    });
+
+
+    app.get("./Login/logout", function(req,res){
+        res.cookie("token", "snart är det jul");
+        res.redirect("./Login/secret");
+    });
 
 }
