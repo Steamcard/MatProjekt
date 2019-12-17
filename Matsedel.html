@@ -6,15 +6,51 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+<style>
+    body{
+        width: 1200px;
+        margin: auto;
+        background: #1a1a1a;
+    }
+
+    form{
+        width: 350px;
+        height: 300px;
+        margin: auto;
+        margin-top: 200px;
+        border: 1px solid white;
+        box-shadow: 1px 1px 15px whitesmoke;
+    }
+    input
+    {
+        width: 250px;
+        height: 30px;
+        padding: 2px;
+        margin: 12px;
+        margin-left: 45px;
+        box-shadow: 0.5px 0.5px 2px black;
+    }
+    .yolo
+    {
+        margin-left: 49px;
+    }
+    input[type=submit]{
+        margin-top: 25px;
+        height: 50px;
+        background: lightblue;
+        box-shadow: 1px 1px 15px lightblue;
+    }
+    
+</style>
 <body>
     <form action="/matratter/skapa" method="post">
         <input type="text" name="Mat" placeholder="Mat">
         <br>
-        <input type="text" name="Bild" placeholder="Bild">
+        <input type="text" name="Bild" placeholder="Bild Länk">
         <br>
         <input type="text" name="Instruktioner" placeholder="Instruktioner">
         <br>
-        <input type="submit" value="Lägg till">
+        <input type="submit" value="Lägg till" class="yolo">
 
     </form>
 </body>

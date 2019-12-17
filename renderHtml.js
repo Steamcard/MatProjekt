@@ -9,6 +9,19 @@ module.exports = function(title,content)
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>${title}</title>
 </head>
+<style>
+    body{
+        width: 1200px;
+        margin:auto;
+        background:#1a1a1a;
+    }
+
+    main
+    {
+        width:300px;
+        margin: auto;
+    }
+</style>
 <body>
     <main>
         ${content}
